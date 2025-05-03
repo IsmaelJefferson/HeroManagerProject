@@ -9,11 +9,11 @@ namespace HeroManager.API.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
-public class HeroContoller : ControllerBase
+public class HeroController : ControllerBase
 {
     private readonly IHeroService _heroService;
 
-    public HeroContoller(IHeroService heroService)
+    public HeroController(IHeroService heroService)
     {
         _heroService = heroService;
     }
@@ -25,8 +25,14 @@ public class HeroContoller : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<HeroDTO>>> Get()
     {
-        var hero = await _heroService.GetAllAsync();
-        return Ok(hero);
+        var heroes = await _heroService.GetAllAsync();
+
+        if (heroes == null || !heroes.Any())
+        {
+            return NotFound("Não existe nenhum super-heroi cadastrado");
+        }
+
+        return Ok(heroes);
     }
 
     /// <summary>
@@ -37,11 +43,19 @@ public class HeroContoller : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<HeroDTO>> GetById(int id)
     {
-        var hero = await _heroService.GetByIdAsync(id);
-        if (hero == null) return NotFound();
-
-        return Ok(hero);
-
+        try
+        {
+            var hero = await _heroService.GetByIdAsync(id);
+            return Ok(hero);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     /// <summary>
@@ -52,22 +66,28 @@ public class HeroContoller : ControllerBase
     [HttpPost]
     public async Task<ActionResult<HeroDTO>> Create([FromBody] CreateHeroDTO createHeroDTO)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
         try
         {
             var hero = await _heroService.CreateAsync(createHeroDTO);
 
-            return CreatedAtAction(nameof(GetById), new {id = hero.Id}, hero);
+            return Ok(new
+            {
+                message = "Super-herói cadastrado com sucesso.",
+                date = hero
+            }
+            );
         }
-        catch(InvalidOperationException ex)
+        catch (InvalidOperationException ex)
         {
-            return Conflict(new {message = ex.Message});
+            return Conflict(new { message = ex.Message });
         }
-
-        
-
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
     }
 
     /// <summary>
@@ -77,22 +97,32 @@ public class HeroContoller : ControllerBase
     /// <param name="updateHeroDTO">Objeto com os dados atualizados.</param>
     /// <returns>Nenhum conteúdo.</returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id,[FromBody] UpdateHeroDTO updateHeroDTO)
+    public async Task<ActionResult<HeroDTO>> Update(int id, [FromBody] UpdateHeroDTO updateHeroDTO)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
             return BadRequest(ModelState);
-        
+
         try
         {
-            await _heroService.UpdateAsync(id, updateHeroDTO);
-            return NoContent();
-        }
-        catch(InvalidOperationException ex)
-        {
-            return Conflict(new {message = ex.Message});
-        }
-        
+            var hero = await _heroService.UpdateAsync(id, updateHeroDTO);
 
+            if (hero == null) return NotFound($"Não existe nenhum super-heroi com o id informado");
+
+            return Ok(new
+            {
+                message = "Super-herói atualizado com sucesso.",
+                date = hero
+            }
+            );
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     /// <summary>
@@ -103,8 +133,23 @@ public class HeroContoller : ControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(int id)
     {
-        await _heroService.DeleteAsync(id);
-        return NoContent();
+        try
+        {
+            await _heroService.DeleteAsync(id);
+
+            return Ok(new
+            {
+                message = "Herói deletado com sucesso"
+            });
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
 
     }
 
