@@ -1,0 +1,76 @@
+<h2>Cadastrar Herói</h2>
+
+<div
+  *ngIf="successMessage"
+  style="
+    background-color: #28a745;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    text-align: center;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  "
+>
+  {{ successMessage }}
+</div>
+
+<div
+  *ngIf="errorMessage"
+  style="
+    background-color: #dc3545;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    text-align: center;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  "
+>
+  {{ errorMessage }}
+</div>
+
+<form (ngSubmit)="addHero()">
+  <label for="name">Nome real:</label>
+  <input type="text" id="name" [(ngModel)]="hero.name" name="name" required>
+
+  <label for="heroName">Nome de herói:</label>
+  <input type="text" id="heroName" [(ngModel)]="hero.heroName" name="heroName" required>
+
+  <label for="birthDate">Data de nascimento:</label>
+  <input type="date" id="birthDate" [(ngModel)]="hero.birthDate" name="birthDate" required>
+
+  <label for="height">Altura (em metros):</label>
+  <input type="number" step="0.01" id="height" [(ngModel)]="hero.height" name="height" required>
+
+  <label for="weight">Peso (em kg):</label>
+  <input type="number" step="0.1" id="weight" [(ngModel)]="hero.weight" name="weight" required>
+
+  <label>Poderes:</label>
+<button type="button" (click)="togglePowers()" style="margin-bottom: 8px;">
+  {{ showPowers ? 'Ocultar Poderes' : 'Selecionar Poderes' }}
+</button>
+
+<div *ngIf="showPowers" style="border: 1px solid #ccc; padding: 10px; border-radius: 6px; max-width: 300px;">
+  <div *ngFor="let power of powers">
+    <label>
+      <input type="checkbox"
+             [value]="power.id"
+             (change)="onPowerToggle($event)">
+      {{ power.name }}
+    </label>
+  </div>
+</div>
+
+  <button type="submit">Cadastrar</button>
+</form>

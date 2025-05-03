@@ -1,0 +1,124 @@
+// Estilo para o título da lista de heróis
+h2 {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  // Estilo para a tabela de heróis
+  table {
+    width: 80%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+  
+    // Estilo para as células da tabela
+    td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      font-size: 1rem;
+    }
+  
+    // Estilo para a primeira coluna (nome do herói)
+    td:first-child {
+      font-weight: bold;
+    }
+  
+    // Estilo para o botão de deletar
+    td button {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+  
+      &:hover {
+        background-color: #c0392b;
+      }
+    }
+  
+    // Estilo para o link de editar
+    td a {
+      color: #3498db;
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+  
+      &:hover {
+        background-color: #ecf0f1;
+      }
+    }
+  }
+  
+  // Estilo para o botão de adicionar herói
+  button[routerLink="/add"] {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-family: 'Segoe UI', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 1rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  
+    &:hover {
+      background-color: #27ae60;
+    }
+  } 
+  
+  /* Estilos para o modal */
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: rgba(0, 0, 0, 0.7); /* Fundo escuro */
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 30px;  /* Aumentando o padding para dar mais espaço */
+    border-radius: 8px;
+    width: 80%;  /* Ajuste o tamanho conforme necessário */
+    max-width: 800px;  /* Aumentando o tamanho do modal */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;  /* Necessário para o posicionamento do botão "x" */
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .close {
+    font-size: 30px;
+    color: #aaa;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+  }  
+  

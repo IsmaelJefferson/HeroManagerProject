@@ -1,0 +1,50 @@
+<h2>Lista de Heróis</h2>
+
+<div
+  *ngIf="successMessage"
+  style="
+    background-color: #dc3545;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    text-align: center;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  "
+>
+  {{ successMessage }}
+</div>
+
+<table>
+  <tr *ngFor="let hero of heroes">
+    <td>{{ hero.name }}</td>
+    <td>{{ hero.power }}</td>
+    <td><button class="delete-button" (click)="deleteHero(hero.id)">Deletar</button></td>
+    <td><a class="edit-button" [routerLink]="['/edit', hero.id]">Editar</a></td>
+    <td><button class="detail-button" (click)="openDetails(hero.id)">Detalhes</button></td>
+  </tr>
+</table>
+
+<button routerLink="/add">Adicionar Herói</button>
+
+<!-- Modal -->
+<div class="modal" *ngIf="showModal">
+  <div class="modal-content">
+    <button class="close" (click)="closeModal()">×</button>
+    <h2>Detalhes do Herói</h2>
+    <p><strong>Nome real:</strong> {{ selectedHero?.name }}</p>
+    <p><strong>Nome de herói:</strong> {{ selectedHero?.heroName }}</p>
+    <p><strong>Data de nascimento:</strong> {{ selectedHero?.birthDate | date:'dd/MM/yyyy' }}</p>
+    <p><strong>Altura:</strong> {{ selectedHero?.height }} m</p>
+    <p><strong>Peso:</strong> {{ selectedHero?.weight }} kg</p>
+    <p><strong>Poderes:</strong></p>
+    <ul>
+      <li *ngFor="let power of selectedHero?.superPowers">{{ power }}</li>
+    </ul>
+  </div>
+</div>
