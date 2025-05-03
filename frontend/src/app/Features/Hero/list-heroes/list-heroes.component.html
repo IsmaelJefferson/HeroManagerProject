@@ -21,13 +21,13 @@
     <tr *ngFor="let hero of heroes">
         <td>{{ hero.name }}</td>
         <td>{{ hero.power }}</td>
-        <td><button class="delete-button" (click)="deleteHero(hero.id)">Deletar</button></td>
-        <td><a class="edit-button" [routerLink]="['/edit', hero.id]">Editar</a></td>
-        <td><button class="detail-button" (click)="openDetails(hero.id)">Detalhes</button></td>
+        <td><button class="delete-button" (click)="deleteHero(hero.id)">DELETAR</button></td>
+        <td><a class="edit-button" [routerLink]="['/edit', hero.id]">EDITAR</a></td>
+        <td><button class="detail-button" (click)="openDetails(hero.id)">DETALHES</button></td>
     </tr>
 </table>
 
-<button routerLink="/add">Adicionar Herói</button>
+<button routerLink="/add">ADICIONAR HERÓI</button>
 
 <!-- Modal -->
 <div class="modal" *ngIf="showModal">
