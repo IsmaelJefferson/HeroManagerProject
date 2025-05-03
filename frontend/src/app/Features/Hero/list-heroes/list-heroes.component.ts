@@ -10,12 +10,13 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./list-heroes.component.scss'],
   imports: [CommonModule, RouterModule]
 })
+
 export class HeroListComponent implements OnInit {
   heroes: any[] = [];
   selectedHero: any = null;
   showModal = false;
 
-  constructor(private heroService: HeroService) {}
+  constructor(private heroService: HeroService) { }
 
   ngOnInit(): void {
     this.heroService.getHeroes().subscribe(data => {
@@ -25,16 +26,16 @@ export class HeroListComponent implements OnInit {
 
   successMessage: string | null = null;
 
-deleteHero(id: number): void {
-  this.heroService.deleteHero(id).subscribe(() => {
-    this.heroes = this.heroes.filter(hero => hero.id !== id);
-    this.successMessage = 'Herói deletado com sucesso';
+  deleteHero(id: number): void {
+    this.heroService.deleteHero(id).subscribe(() => {
+      this.heroes = this.heroes.filter(hero => hero.id !== id);
+      this.successMessage = 'Herói deletado com sucesso';
 
-    setTimeout(() => {
-      this.successMessage = null;
-    }, 3000);
-  });
-}
+      setTimeout(() => {
+        this.successMessage = null;
+      }, 3000);
+    });
+  }
 
   openDetails(id: number): void {
     this.heroService.getHeroById(id).subscribe(data => {

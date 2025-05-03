@@ -9,7 +9,7 @@ describe('ListHeroesComponent', () => {
     await TestBed.configureTestingModule({
       imports: [HeroListComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(HeroListComponent);
     component = fixture.componentInstance;

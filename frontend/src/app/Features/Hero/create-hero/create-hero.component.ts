@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { HeroService } from '../../../Services/Hero/hero.service';
 import { SuperPowerService, SuperPower } from '../../../Services/SuperPower/super-power.service';
 import { CommonModule } from '@angular/common';
@@ -32,7 +32,7 @@ export class HeroAddComponent implements OnInit {
     private heroService: HeroService,
     private powerService: SuperPowerService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.powerService.getAll().subscribe({
@@ -51,7 +51,7 @@ export class HeroAddComponent implements OnInit {
         setTimeout(() => {
           this.successMessage = null;
           this.router.navigate(['/']);
-        }, 2000); // Aguarda 2 segundos para mostrar a mensagem antes de redirecionar
+        }, 2000);
       },
       error: (error) => {
         if (error.status === 409 && error.error?.message) {

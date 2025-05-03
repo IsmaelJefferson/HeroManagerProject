@@ -21,25 +21,23 @@ export class HeroEditComponent implements OnInit {
     private superPowerService: SuperPowerService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
-  
+
     this.heroService.getHeroById(id).subscribe(data => {
-      // Formata a data para yyyy-MM-dd
       if (data.birthDate) {
         data.birthDate = data.birthDate.split('T')[0];
       }
-  
+
       this.hero = data;
-  
-      // Garante que hero.superPowersId está inicializado corretamente para o select múltiplo
+
       if (!this.hero.superPowersId) {
         this.hero.superPowersId = [];
       }
     });
-  
+
     this.superPowerService.getAll().subscribe(powers => {
       this.powers = powers;
     });
